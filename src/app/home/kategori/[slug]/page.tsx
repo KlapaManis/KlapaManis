@@ -52,7 +52,7 @@ export default async function KategoriPage({ params }: { params: { slug: string 
               const disc=hasDiskon?Math.round(it.harga*(1-it.diskon!/100)):null
               const showHarga = Number(it.harga) !== 0
               return (
-                <div key={it.id} className="relative h-[45dvh] rounded-2xl overflow-hidden border-2 border-white bg-stone-900 [transform:perspective(1000px)_rotateX(2deg)_translateZ(0)] hover:[transform:perspective(1000px)_rotateX(0deg)_translateZ(12px)] transition-all duration-500" style={{boxShadow: cardShadow}}>
+                <div key={it.id} className="relative h-[45dvh] rounded-2xl overflow-hidden border-2 border-white bg-stone-900" style={{boxShadow: cardShadow}}>
                   {it.photoUrl ? <img src={it.photoUrl} alt={it.nama} className="absolute inset-0 w-full h-full object-cover brightness-[1.05] contrast-[1.08] saturate-[1.1]" /> : <div className="absolute inset-0 grid place-items-center bg-stone-100 text-stone-400 text-sm">No image</div>}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
                   <div className="absolute inset-0 rounded-2xl shadow-[inset_0_1px_0_rgba(255,255,255,0.25),inset_0_-1px_0_rgba(0,0,0,0.2)] pointer-events-none" />
