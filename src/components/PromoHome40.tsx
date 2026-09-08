@@ -76,14 +76,14 @@ export default function PromoHome40({ banners, galleryTransition='acak', gallery
               )}
             </div>
           ) : (
-            <div className="w-full h-full grid place-items-center text-stone-400 text-sm p-4 text-center">Gallery slider — tambah beberapa foto di /promo/setting/gallery</div>
+            <div className="w-full h-full grid place-items-center text-stone-400 text-sm p-4 text-center">Gallery slider — tambah beberapa foto di /home/setting/gallery</div>
           )}
         </div>
       </div>
 
       {/* Menu bawah - tidak kepotong */}
       <div className="bg-[#FAF7F2] flex items-center justify-center px-2 pt-2 pb-4">
-        <CategoryNav active={tab} onSelect={(v)=>{ setTab(v.toLowerCase() as any); router.push(`/promo/kategori/${v.toLowerCase()}`) }} />
+        <CategoryNav active={tab} onSelect={(v)=>{ setTab(v.toLowerCase() as any); router.push(`/home/kategori/${v.toLowerCase()}`) }} />
       </div>
     </div>
   )

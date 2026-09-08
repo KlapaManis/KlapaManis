@@ -26,7 +26,7 @@ export default function GallerySettingPage(){
       'promo_landing.gallery_transition': transition,
       'promo_landing.gallery_interval': interval,
     })})
-    alert('Tersimpan — refresh /promo untuk lihat perubahan arah')
+    alert('Tersimpan — refresh /home untuk lihat perubahan arah')
   }
 
   return (
@@ -69,7 +69,7 @@ export default function GallerySettingPage(){
         ))}
         {banners.length===0 && <div className="p-6 text-center text-xs text-slate-400">Belum ada foto</div>}
       </div>
-      <a href="/promo" className="text-xs underline">← Lihat /promo</a>
+      <a href="/home" className="text-xs underline">← Lihat /home</a>
     </div>
   )
 }

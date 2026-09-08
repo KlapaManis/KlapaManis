@@ -20,7 +20,7 @@ function LoginInner() {
     const data = await res.json()
     setLoading(false)
     if (!res.ok) setErr(data.error || 'Gagal login')
-    else router.push(sp.get('next') || '/promo/setting')
+    else router.push(sp.get('next') || '/home/setting')
   }
 
   return (

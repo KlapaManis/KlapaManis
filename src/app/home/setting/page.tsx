@@ -2,11 +2,11 @@
 import Link from 'next/link'
 
 const cards = [
-  { href: '/promo/setting/gallery', title: 'Gallery', desc: 'Slider foto + arah (acak/atas/bawah/kiri/kanan)' },
-  { href: '/promo/setting/banner', title: 'Banner', desc: 'Slide header landing' },
-  { href: '/promo/setting/promo', title: 'Promo', desc: 'Kampanye diskon' },
-  { href: '/promo/setting/menu', title: 'Menu', desc: 'Kelola menu + harga tetap + foto' },
-  { href: '/promo/setting/tampilan', title: 'Tampilan', desc: 'Hero & warna' },
+  { href: '/home/setting/gallery', title: 'Gallery', desc: 'Slider foto + arah (acak/atas/bawah/kiri/kanan)' },
+  { href: '/home/setting/banner', title: 'Banner', desc: 'Slide header landing' },
+  { href: '/home/setting/promo', title: 'Promo', desc: 'Kampanye diskon' },
+  { href: '/home/setting/menu', title: 'Menu', desc: 'Kelola menu + harga tetap + foto' },
+  { href: '/home/setting/tampilan', title: 'Tampilan', desc: 'Hero & warna' },
 ]
 
 export default function SettingIndex() {
@@ -15,9 +15,9 @@ export default function SettingIndex() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-lg font-semibold">Setting Promo & Media</h1>
-          <p className="text-xs text-slate-500">Kelola dari /promo/setting (login required)</p>
+          <p className="text-xs text-slate-500">Kelola dari /home/setting (login required)</p>
         </div>
-        <Link href="/promo" className="text-xs underline">← Lihat Landing</Link>
+        <Link href="/home" className="text-xs underline">← Lihat Landing</Link>
       </div>
       <div className="grid sm:grid-cols-2 gap-3">
         {cards.map(c => (

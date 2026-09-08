@@ -9,19 +9,19 @@ export default function PromoPage(){
   const [form,setForm]=useState<any>({nama:'',deskripsi:'',tipeDiskon:'persen',nilaiDiskon:0,mulai:'',selesai:'',aktif:1,menuIds:[]})
   const [editId,setEditId]=useState<number|null>(null)
 
-  async function load(){ const r=await fetch('/api/promo'); const j=await r.json(); setRows(j.rows||[]); const m=await fetch('/api/menu'); const mj=await m.json(); setMenus((mj.rows||[]).map((x:any)=>({id:x.id,nama:x.nama,harga:x.harga}))) }
+  async function load(){ const r=await fetch('/api/home'); const j=await r.json(); setRows(j.rows||[]); const m=await fetch('/api/menu'); const mj=await m.json(); setMenus((mj.rows||[]).map((x:any)=>({id:x.id,nama:x.nama,harga:x.harga}))) }
   useEffect(()=>{load()},[])
 
   async function submit(e:React.FormEvent){
     e.preventDefault()
-    const url=editId?`/api/promo/${editId}`:'/api/promo'
+    const url=editId?`/api/home/${editId}`:'/api/home'
     const method=editId?'PUT':'POST'
     const r=await fetch(url,{method,headers:{'Content-Type':'application/json'},body:JSON.stringify({...form,nilaiDiskon:Number(form.nilaiDiskon)})})
     if(!r.ok) return alert((await r.json()).error)
     setForm({nama:'',deskripsi:'',tipeDiskon:'persen',nilaiDiskon:0,mulai:'',selesai:'',aktif:1,menuIds:[]}); setEditId(null); load()
   }
   async function edit(id:number){
-    const r=await fetch(`/api/promo/${id}`); const j=await r.json();
+    const r=await fetch(`/api/home/${id}`); const j=await r.json();
     setEditId(id); setForm({nama:j.row.nama,deskripsi:j.row.deskripsi||'',tipeDiskon:j.row.tipeDiskon,nilaiDiskon:j.row.nilaiDiskon,mulai:j.row.mulai||'',selesai:j.row.selesai||'',aktif:j.row.aktif,menuIds:j.menuIds||[]})
   }
 
@@ -63,7 +63,7 @@ export default function PromoPage(){
         {rows.map(r=>(
           <div key={r.id} className="p-3 border-t first:border-0 flex justify-between items-center">
             <div><div className="font-medium text-sm">{r.nama}</div><div className="text-xs text-slate-500">{r.tipeDiskon} {r.nilaiDiskon} • {r.aktif?'Aktif':'Nonaktif'}</div></div>
-            <div className="flex gap-2"><button onClick={()=>edit(r.id)} className="text-xs text-teal-600">Edit</button><button onClick={async()=>{if(confirm('Hapus?')){await fetch(`/api/promo/${r.id}`,{method:'DELETE'});load()}}} className="text-xs text-red-600">Hapus</button></div>
+            <div className="flex gap-2"><button onClick={()=>edit(r.id)} className="text-xs text-teal-600">Edit</button><button onClick={async()=>{if(confirm('Hapus?')){await fetch(`/api/home/${r.id}`,{method:'DELETE'});load()}}} className="text-xs text-red-600">Hapus</button></div>
           </div>
         ))}
         {rows.length===0 && <div className="p-6 text-center text-xs text-slate-400">Belum ada promo</div>}
