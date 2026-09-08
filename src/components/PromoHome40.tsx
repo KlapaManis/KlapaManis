@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import CategoryNav from './CategoryNav'
+import DetailModal from './DetailModal'
 
 type Banner = { id:number,imageUrl:string,title:string|null }
 
@@ -26,6 +27,7 @@ export default function PromoHome40({ banners, galleryTransition='acak', gallery
   const [idx,setIdx]=useState(0)
   const [dir,setDir]=useState<Dir>('left')
   const [tab,setTab]=useState<''|'makanan'|'minuman'|'paket'>('')
+  const [detail,setDetail]=useState<{title:string,image:string|null,desc?:string|null}|null>(null)
   const interval = Math.max(1000, Number(galleryInterval)||3000)
 
   const go = (next: number, forcedDir?: Dir) => {
@@ -53,13 +55,15 @@ export default function PromoHome40({ banners, galleryTransition='acak', gallery
       <div className="px-3 sm:px-4 pt-3 pb-2">
         <div className="h-[38dvh] rounded-2xl overflow-hidden bg-stone-100 border border-[#EEE8D8] relative">
           {banners.length>0 ? (
-            <div className="w-full h-full relative overflow-hidden">
+            <div className="w-full h-full relative overflow-hidden" onClick={()=>{
+              const b=banners[idx]; setDetail({title: b.title||'Gallery', image: b.imageUrl, desc: null})
+            }}>
               {banners.map((b,i)=>(
                 <img
                   key={b.id}
                   src={b.imageUrl}
                   alt={b.title||'Gallery'}
-                  className={`absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-in-out ${i===idx ? 'translate-x-0 translate-y-0' : i < idx ? '-translate-x-full' : enterClass[dir]}`}
+                  className={`absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-in-out cursor-pointer ${i===idx ? 'translate-x-0 translate-y-0' : i < idx ? '-translate-x-full' : enterClass[dir]}`}
                   style={{ zIndex: i===idx ? 1 : 0 }}
                 />
               ))}
@@ -85,6 +89,7 @@ export default function PromoHome40({ banners, galleryTransition='acak', gallery
       <div className="bg-[#FAF7F2] flex items-center justify-center px-2 pt-2 pb-4">
         <CategoryNav active={tab} onSelect={(v)=>{ setTab(v.toLowerCase() as any); router.push(`/home/kategori/${v.toLowerCase()}`) }} />
       </div>
+      <DetailModal data={detail} onClose={()=>setDetail(null)} />
     </div>
   )
 }

@@ -2,6 +2,7 @@
 import Link from 'next/link'
 
 const cards = [
+  { href: '/home/setting/umum', title: 'Umum', desc: 'Judul tab browser & favicon/logo tab' },
   { href: '/home/setting/gallery', title: 'Gallery', desc: 'Slider foto + arah (acak/atas/bawah/kiri/kanan)' },
   { href: '/home/setting/banner', title: 'Banner', desc: 'Slide header landing' },
   { href: '/home/setting/promo', title: 'Promo', desc: 'Kampanye diskon' },

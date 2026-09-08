@@ -1,5 +1,6 @@
 import { getBanners, getLandingSettings } from '@/lib/promoRepo'
 import PromoHome40 from '@/components/PromoHome40'
+import PageTransition from '@/components/PageTransition'
 export const dynamic = 'force-dynamic'
 
 export default async function PromoPage() {
@@ -13,6 +14,7 @@ export default async function PromoPage() {
   const heroSubtitle = settings['promo_landing.hero_subtitle'] || 'Tradisi Rasa, Kehangatan Bersama'
 
   return (
+    <PageTransition>
     <div className="flex flex-col h-[100dvh] w-full overflow-hidden bg-[#FAF7F2]">
       {/* 45% Hero - paten, tidak ikut scroll berlebih */}
       <section className="relative h-[45dvh] shrink-0 w-full overflow-hidden bg-stone-900 rounded-b-[24px]">
@@ -29,5 +31,6 @@ export default async function PromoPage() {
         <PromoHome40 banners={banners} galleryTransition={settings['promo_landing.gallery_transition']||'acak'} galleryInterval={settings['promo_landing.gallery_interval']||'3000'} />
       </div>
     </div>
+    </PageTransition>
   )
 }
