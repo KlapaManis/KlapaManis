@@ -19,6 +19,19 @@ export default function BannerPage(){
   }
 
   async function submit(e:React.FormEvent){ e.preventDefault(); const url=editId?`/api/banner/${editId}`:'/api/banner'; const m=editId?'PUT':'POST'; const r=await fetch(url,{method:m,headers:{'Content-Type':'application/json'},body:JSON.stringify(form)}); if(!r.ok) return alert((await r.json()).error); setForm({imageUrl:'',title:'',subtitle:'',linkUrl:'',urutan:0,aktif:1}); setEditId(null); load() }
+
+  async function move(id:number, dir:'up'|'down'){
+    const sorted=[...rows].sort((a,b)=>a.urutan-b.urutan)
+    const i=sorted.findIndex(r=>r.id===id)
+    const j=dir==='up'?i-1:i+1
+    if(i<0||j<0||j>=sorted.length) return
+    const a=sorted[i], b=sorted[j]
+    await Promise.all([
+      fetch(`/api/banner/${a.id}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({urutan:b.urutan})}),
+      fetch(`/api/banner/${b.id}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({urutan:a.urutan})}),
+    ])
+    load()
+  }
   return (
     <div className="max-w-4xl mx-auto p-4 space-y-4">
       <h1 className="font-semibold">Kelola Banner</h1>
@@ -45,6 +58,8 @@ export default function BannerPage(){
           <div key={r.id} className="flex gap-3 p-3 border-t first:border-0 items-center">
             <img src={r.imageUrl} className="h-12 w-20 object-cover rounded" alt="" />
             <div className="flex-1 text-sm"><div className="font-medium">#{r.urutan} — {r.title||'-'}</div><div className="text-xs text-slate-500">{r.subtitle||''}</div></div>
+            <button onClick={()=>move(r.id,'up')} className="text-xs text-slate-600 font-bold" title="Naik">↑</button>
+            <button onClick={()=>move(r.id,'down')} className="text-xs text-slate-600 font-bold" title="Turun">↓</button>
             <button onClick={()=>{setEditId(r.id);setForm({imageUrl:r.imageUrl,title:r.title||'',subtitle:r.subtitle||'',linkUrl:r.linkUrl||'',urutan:r.urutan,aktif:r.aktif})}} className="text-xs text-teal-600">Edit</button>
             <button onClick={async()=>{if(confirm('Hapus?')){await fetch(`/api/banner/${r.id}`,{method:'DELETE'});load()}}} className="text-xs text-red-600">Hapus</button>
           </div>

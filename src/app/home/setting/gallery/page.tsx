@@ -34,6 +34,19 @@ export default function GallerySettingPage(){
   async function del(id:number){ if(!confirm('Hapus?'))return; await fetch(`/api/gallery/${id}`,{method:'DELETE'}); load() }
   function edit(r:GalleryRow){ setEditId(r.id); setForm({imageUrl:r.imageUrl,title:r.title||'',deskripsi:r.deskripsi||'',urutan:r.urutan??0}) }
 
+  async function move(id:number, dir:'up'|'down'){
+    const sorted=[...rows].sort((a,b)=>a.urutan-b.urutan)
+    const i=sorted.findIndex(r=>r.id===id)
+    const j=dir==='up'?i-1:i+1
+    if(i<0||j<0||j>=sorted.length) return
+    const a=sorted[i], b=sorted[j]
+    await Promise.all([
+      fetch(`/api/gallery/${a.id}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({imageUrl:a.imageUrl,title:a.title||'',deskripsi:a.deskripsi||'',urutan:b.urutan})}),
+      fetch(`/api/gallery/${b.id}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({imageUrl:b.imageUrl,title:b.title||'',deskripsi:b.deskripsi||'',urutan:a.urutan})}),
+    ])
+    load()
+  }
+
   return (
     <div className="max-w-5xl mx-auto p-4 space-y-4">
       <h1 className="font-semibold">Kelola Gallery</h1>
@@ -59,6 +72,10 @@ export default function GallerySettingPage(){
             <img src={r.imageUrl} alt={r.title||''} className="w-full aspect-[3/4] object-cover" />
             <div className="absolute top-2 left-2 bg-black/60 text-white text-[11px] font-bold rounded-full px-2 py-0.5">#{r.urutan}</div>
             {r.title && <div className="px-2 py-1 text-xs font-semibold truncate">{r.title}</div>}
+            <div className="absolute bottom-2 left-2 flex gap-1">
+              <button onClick={()=>move(r.id,'up')} className="bg-black/60 text-white rounded-full w-6 h-6 grid place-items-center text-xs" title="Naik">↑</button>
+              <button onClick={()=>move(r.id,'down')} className="bg-black/60 text-white rounded-full w-6 h-6 grid place-items-center text-xs" title="Turun">↓</button>
+            </div>
             <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
               <button onClick={()=>edit(r)} className="bg-blue-500 text-white rounded-full w-6 h-6 grid place-items-center text-xs">E</button>
               <button onClick={()=>del(r.id)} className="bg-red-500 text-white rounded-full w-6 h-6 grid place-items-center text-xs">D</button>
