@@ -3,6 +3,7 @@ import { getDb } from '@/db'
 import { gallery } from '@/db/schema'
 import { eq, asc } from 'drizzle-orm'
 import GalleryClient from '@/components/GalleryClient'
+import PageTransition from '@/components/PageTransition'
 export const dynamic = 'force-dynamic'
 
 export default async function GalleryPage(){
@@ -22,6 +23,7 @@ export default async function GalleryPage(){
   const items = await db.select().from(gallery).where(eq(gallery.aktif, 1)).orderBy(asc(gallery.urutan)).catch(()=>[])
 
   return (
+    <PageTransition>
     <div className="w-full" style={{backgroundColor: bgColor}}>
       <section className="relative h-[42svh] w-full overflow-hidden bg-stone-900 rounded-b-[24px]">
         {heroImage && <img src={heroImage} alt="Hero" className="absolute inset-0 w-full h-full object-cover" />}
@@ -38,5 +40,6 @@ export default async function GalleryPage(){
         </div>
       </div>
     </div>
+    </PageTransition>
   )
 }

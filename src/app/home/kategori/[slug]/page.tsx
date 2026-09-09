@@ -3,6 +3,7 @@ import { getDb } from '@/db'
 import { menu, menuPhoto } from '@/db/schema'
 import { eq, asc } from 'drizzle-orm'
 import KategoriClient from '@/components/KategoriClient'
+import PageTransition from '@/components/PageTransition'
 export const dynamic = 'force-dynamic'
 
 const LABEL: Record<string,string> = { makanan:'Makanan', minuman:'Minuman', paket:'Paket' }
@@ -36,6 +37,7 @@ export default async function KategoriPage({ params }: { params: { slug: string 
   }))
 
   return (
+    <PageTransition>
     <div className="w-full" style={{backgroundColor: bgColor}}>
       <section className="relative h-[42svh] w-full overflow-hidden bg-stone-900 rounded-b-[24px]">
         {heroImage && <img src={heroImage} alt="Hero" className="absolute inset-0 w-full h-full object-cover" />}
@@ -56,5 +58,6 @@ export default async function KategoriPage({ params }: { params: { slug: string 
         </div>
       </div>
     </div>
+    </PageTransition>
   )
 }
