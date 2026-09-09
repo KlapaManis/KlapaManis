@@ -5,14 +5,30 @@ export default function BannerPage(){
   const [rows,setRows]=useState<Row[]>([])
   const [form,setForm]=useState<any>({imageUrl:'',title:'',subtitle:'',linkUrl:'',urutan:0,aktif:1})
   const [editId,setEditId]=useState<number|null>(null)
+  const [uploading,setUploading]=useState(false)
   async function load(){ const r=await fetch('/api/banner'); const j=await r.json(); setRows(j.rows||[]) }
   useEffect(()=>{load()},[])
+
+  async function uploadFile(f:File){
+    setUploading(true)
+    const fd=new FormData(); fd.append('file',f)
+    const r=await fetch('/api/upload',{method:'POST',body:fd})
+    const j=await r.json()
+    setUploading(false)
+    if(j.url) setForm((s:any)=>({...s,imageUrl:j.url}))
+  }
+
   async function submit(e:React.FormEvent){ e.preventDefault(); const url=editId?`/api/banner/${editId}`:'/api/banner'; const m=editId?'PUT':'POST'; const r=await fetch(url,{method:m,headers:{'Content-Type':'application/json'},body:JSON.stringify(form)}); if(!r.ok) return alert((await r.json()).error); setForm({imageUrl:'',title:'',subtitle:'',linkUrl:'',urutan:0,aktif:1}); setEditId(null); load() }
   return (
     <div className="max-w-4xl mx-auto p-4 space-y-4">
       <h1 className="font-semibold">Kelola Banner</h1>
       <form onSubmit={submit} className="bg-white border rounded-xl p-4 grid gap-3">
-        <input className="border rounded-lg px-3 py-2 text-sm" placeholder="Image URL (atau /uploads/...)" value={form.imageUrl} onChange={e=>setForm({...form,imageUrl:e.target.value})} required />
+        <input className="border rounded-lg px-3 py-2 text-sm" placeholder="Image URL atau upload" value={form.imageUrl} onChange={e=>setForm({...form,imageUrl:e.target.value})} required />
+        <div className="flex gap-2 items-center">
+          <input type="file" accept="image/*" onChange={e=>{if(e.target.files?.[0])uploadFile(e.target.files[0])}} />
+          {uploading && <span className="text-xs">Uploading...</span>}
+          {form.imageUrl && <img src={form.imageUrl} alt="" className="h-10 w-10 object-cover rounded" />}
+        </div>
         <div className="grid sm:grid-cols-2 gap-3">
           <input className="border rounded-lg px-3 py-2 text-sm" placeholder="Title" value={form.title} onChange={e=>setForm({...form,title:e.target.value})} />
           <input className="border rounded-lg px-3 py-2 text-sm" placeholder="Subtitle" value={form.subtitle} onChange={e=>setForm({...form,subtitle:e.target.value})} />
