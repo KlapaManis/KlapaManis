@@ -53,7 +53,7 @@ export default function PromoHome40({ banners, galleryTransition='acak', gallery
     <div className="flex flex-col h-full w-full overflow-hidden">
       {/* Gallery slider — flex-1 ambil sisa ruang */}
       <div className="flex-1 flex flex-col min-h-0 px-3 sm:px-4 pt-3 pb-2">
-        <div className="flex-1 min-h-0 rounded-2xl overflow-hidden bg-stone-100 border border-[#EEE8D8] relative">
+        <div className="flex-1 min-h-0 rounded-2xl overflow-hidden bg-stone-100 border border-[#EEE8D8] relative" style={{boxShadow: '0 10px 28px rgba(0,0,0,0.35), 0 4px 10px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.6)'}}>
           {banners.length>0 ? (
             <div className="w-full h-full relative overflow-hidden" onClick={()=>{
               const b=banners[idx]; setDetail({title: b.title||'Gallery', image: b.imageUrl, desc: null})

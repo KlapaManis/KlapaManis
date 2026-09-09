@@ -17,8 +17,8 @@ export default async function PromoPage() {
   return (
     <PageTransition>
     <div className="flex flex-col h-[100svh] w-full overflow-hidden" style={{backgroundColor: bgColor}}>
-      {/* Hero paten */}
-      <section className="relative h-[42svh] shrink-0 w-full overflow-hidden bg-stone-900 rounded-b-[24px]">
+      {/* Hero paten - 3D shadow */}
+      <section className="relative h-[42svh] shrink-0 w-full overflow-hidden bg-stone-900 rounded-b-[24px]" style={{boxShadow: '0 12px 32px rgba(0,0,0,0.45), 0 4px 12px rgba(0,0,0,0.3)'}}>
         {heroImage && <img src={heroImage} alt="Hero" className="absolute inset-0 w-full h-full object-cover" />}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10" />
         <div className="relative z-10 h-full max-w-6xl mx-auto px-4 pb-6 flex flex-col justify-end text-white">

@@ -12,7 +12,7 @@ export default function GalleryClient({ items, cardBg, cardShadow, isWhiteCard, 
     <>
       <div className="grid grid-cols-2 gap-3">
         {items.map(it=>(
-          <div key={it.id} onClick={()=>setDetail({title:it.title||'Gallery', image:it.imageUrl, desc:it.deskripsi})} className="relative rounded-2xl overflow-hidden bg-stone-900 cursor-pointer aspect-[3/4]" style={{boxShadow: '0 10px 30px rgba(0,0,0,0.4), 0 4px 10px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1)'}}>
+          <div key={it.id} onClick={()=>setDetail({title:it.title||'Gallery', image:it.imageUrl, desc:it.deskripsi})} className="relative rounded-2xl overflow-hidden bg-stone-900 cursor-pointer aspect-[3/4]" style={{boxShadow: '0 14px 36px rgba(0,0,0,0.45), 0 6px 14px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.12)'}}>
             <img src={it.imageUrl} alt={it.title||''} className="absolute inset-0 w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
             {it.title && (
