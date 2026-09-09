@@ -41,7 +41,7 @@ export default async function KategoriPage({ params }: { params: { slug: string 
     <div className="w-full" style={{backgroundColor: bgColor}}>
       <section className="relative h-[42svh] w-full overflow-hidden bg-stone-900 rounded-b-[24px]" style={{boxShadow: '0 12px 32px rgba(0,0,0,0.45), 0 4px 12px rgba(0,0,0,0.3)'}}>
         {heroImage && <img src={heroImage} alt="Hero" className="absolute inset-0 w-full h-full object-cover" />}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10" />
+        {(heroTitle || heroSubtitle) && <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />}
         <div className="relative z-10 h-full max-w-6xl mx-auto px-4 pb-6 flex flex-col justify-end text-white">
           {heroTitle && <h1 className="font-serif text-2xl sm:text-4xl font-semibold leading-tight">{heroTitle}</h1>}
           {heroSubtitle && <p className="text-xs sm:text-sm text-white/80 italic mt-1">{heroSubtitle}</p>}

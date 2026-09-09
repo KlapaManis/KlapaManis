@@ -12,7 +12,7 @@ export default function GalleryClient({ items, cardBg, cardShadow, isWhiteCard, 
     <>
       <div className="grid grid-cols-2 gap-3">
         {items.map(it=>(
-          <div key={it.id} onClick={()=>setDetail({title:it.title||'Gallery', image:it.imageUrl, desc:it.deskripsi})} className="relative rounded-2xl overflow-hidden bg-stone-900 cursor-pointer aspect-[3/4]" style={{boxShadow: '0 14px 36px rgba(0,0,0,0.45), 0 6px 14px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.12)'}}>
+          <div key={it.id} onClick={()=>setDetail({title:it.title||'', image:it.imageUrl, desc:it.deskripsi})} className="relative rounded-2xl overflow-hidden bg-stone-900 cursor-pointer aspect-[3/4]" style={{boxShadow: '0 14px 36px rgba(0,0,0,0.45), 0 6px 14px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.12)'}}>
             <img src={it.imageUrl} alt={it.title||''} className="absolute inset-0 w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
             {it.title && (
@@ -27,7 +27,7 @@ export default function GalleryClient({ items, cardBg, cardShadow, isWhiteCard, 
         ))}
       </div>
       {items.length===0 && <div className="rounded-2xl border border-[#EEE8D8] bg-white p-6 text-center text-[#9A8B7A] text-sm">Belum ada foto gallery</div>}
-      <DetailModal data={detail} onClose={()=>setDetail(null)} />
+      <DetailModal data={detail} onClose={()=>setDetail(null)} imageOnly />
     </>
   )
 }
