@@ -14,11 +14,14 @@ export async function GET(){
 export async function POST(req: NextRequest){
   const auth=await requireAuth()
   if(!auth) return NextResponse.json({error:'Unauthorized'},{status:401})
-  const { imageUrl, title, deskripsi } = await req.json()
+  const { imageUrl, title, deskripsi, urutan } = await req.json()
   if(!imageUrl) return NextResponse.json({error:'imageUrl wajib'},{status:400})
   const db=getDb()
-  const maxRow = await db.select({ maxUrutan: sql<number>`coalesce(max(${gallery.urutan}),0)` }).from(gallery)
-  const nextUrutan = (maxRow[0]?.maxUrutan ?? 0) + 1
+  let nextUrutan = Number(urutan) || 0
+  if(nextUrutan <= 0){
+    const maxRow = await db.select({ maxUrutan: sql<number>`coalesce(max(${gallery.urutan}),0)` }).from(gallery)
+    nextUrutan = (maxRow[0]?.maxUrutan ?? 0) + 1
+  }
   const [row]=await db.insert(gallery).values({ imageUrl, title: title||null, deskripsi: deskripsi||null, urutan: nextUrutan }).returning()
   return NextResponse.json({ row })
 }

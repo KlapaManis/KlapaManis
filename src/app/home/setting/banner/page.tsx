@@ -44,7 +44,7 @@ export default function BannerPage(){
         {rows.map(r=>(
           <div key={r.id} className="flex gap-3 p-3 border-t first:border-0 items-center">
             <img src={r.imageUrl} className="h-12 w-20 object-cover rounded" alt="" />
-            <div className="flex-1 text-sm"><div className="font-medium">{r.title||'-'}</div><div className="text-xs text-slate-500">{r.subtitle||''}</div></div>
+            <div className="flex-1 text-sm"><div className="font-medium">#{r.urutan} — {r.title||'-'}</div><div className="text-xs text-slate-500">{r.subtitle||''}</div></div>
             <button onClick={()=>{setEditId(r.id);setForm({imageUrl:r.imageUrl,title:r.title||'',subtitle:r.subtitle||'',linkUrl:r.linkUrl||'',urutan:r.urutan,aktif:r.aktif})}} className="text-xs text-teal-600">Edit</button>
             <button onClick={async()=>{if(confirm('Hapus?')){await fetch(`/api/banner/${r.id}`,{method:'DELETE'});load()}}} className="text-xs text-red-600">Hapus</button>
           </div>

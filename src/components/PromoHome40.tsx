@@ -2,7 +2,6 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import CategoryNav from './CategoryNav'
-import DetailModal from './DetailModal'
 
 type Banner = { id:number,imageUrl:string,title:string|null }
 
@@ -27,7 +26,6 @@ export default function PromoHome40({ banners, galleryTransition='acak', gallery
   const [idx,setIdx]=useState(0)
   const [dir,setDir]=useState<Dir>('left')
   const [tab,setTab]=useState<''|'makanan'|'minuman'|'paket'>('')
-  const [detail,setDetail]=useState<{title:string,image:string|null,desc?:string|null}|null>(null)
   const interval = Math.max(1000, Number(galleryInterval)||3000)
 
   const go = (next: number, forcedDir?: Dir) => {
@@ -55,15 +53,13 @@ export default function PromoHome40({ banners, galleryTransition='acak', gallery
       <div className="flex-1 flex flex-col min-h-0 px-3 sm:px-4 pt-3 pb-2">
         <div className="flex-1 min-h-0 rounded-2xl overflow-hidden bg-stone-100 border border-[#EEE8D8] relative" style={{boxShadow: '0 10px 28px rgba(0,0,0,0.35), 0 4px 10px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.6)'}}>
           {banners.length>0 ? (
-            <div className="w-full h-full relative overflow-hidden" onClick={()=>{
-              const b=banners[idx]; setDetail({title: b.title||'Gallery', image: b.imageUrl, desc: null})
-            }}>
+            <div className="w-full h-full relative overflow-hidden">
               {banners.map((b,i)=>(
                 <img
                   key={b.id}
                   src={b.imageUrl}
                   alt={b.title||'Gallery'}
-                  className={`absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-in-out cursor-pointer ${i===idx ? 'translate-x-0 translate-y-0' : i < idx ? '-translate-x-full' : enterClass[dir]}`}
+                  className={`absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-in-out ${i===idx ? 'translate-x-0 translate-y-0' : i < idx ? '-translate-x-full' : enterClass[dir]}`}
                   style={{ zIndex: i===idx ? 1 : 0 }}
                 />
               ))}
@@ -89,7 +85,6 @@ export default function PromoHome40({ banners, galleryTransition='acak', gallery
       <div className="flex items-center justify-center px-2 pt-2 pb-4" style={{backgroundColor: bgColor}}>
         <CategoryNav active={tab} onSelect={(v)=>{ setTab(v.toLowerCase() as any); if(v.toLowerCase()==='gallery'){ router.push('/home/gallery') }else{ router.push(`/home/kategori/${v.toLowerCase()}`) } }} bgColor={bgColor} />
       </div>
-      <DetailModal data={detail} onClose={()=>setDetail(null)} />
     </div>
   )
 }
