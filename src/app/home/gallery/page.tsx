@@ -8,8 +8,8 @@ export const dynamic = 'force-dynamic'
 export default async function GalleryPage(){
   const settings = await getLandingSettings().catch(()=> ({} as Record<string,string>))
   const heroImage = settings['promo_landing.hero_image'] || ''
-  const heroTitle = settings['promo_landing.hero_title'] || 'Klapa Manis'
-  const heroSubtitle = settings['promo_landing.hero_subtitle'] || 'Tradisi Rasa, Kehangatan Bersama'
+  const heroTitle = settings['promo_landing.hero_title'] || ''
+  const heroSubtitle = settings['promo_landing.hero_subtitle'] || ''
   const bgColor = settings['promo_landing.bg_color'] || '#FAF7F2'
   const rawCardBg = settings['promo_landing.menu_card_bg'] || '#FFFFFF'
   const overlay = Number(settings['promo_landing.menu_card_overlay']||0.45)
@@ -27,8 +27,8 @@ export default async function GalleryPage(){
         {heroImage && <img src={heroImage} alt="Hero" className="absolute inset-0 w-full h-full object-cover" />}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10" />
         <div className="relative z-10 h-full max-w-6xl mx-auto px-4 pb-6 flex flex-col justify-end text-white">
-          <h1 className="font-serif text-2xl sm:text-4xl font-semibold leading-tight">{heroTitle}</h1>
-          <p className="text-xs sm:text-sm text-white/80 italic mt-1">{heroSubtitle}</p>
+          {heroTitle && <h1 className="font-serif text-2xl sm:text-4xl font-semibold leading-tight">{heroTitle}</h1>}
+          {heroSubtitle && <p className="text-xs sm:text-sm text-white/80 italic mt-1">{heroSubtitle}</p>}
         </div>
       </section>
 
