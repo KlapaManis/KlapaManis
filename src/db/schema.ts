@@ -79,3 +79,14 @@ export const settings = pgTable('settings', {
   value: text('setting_value'),
   group: text('setting_group'),
 })
+
+// === Gallery photos ===
+export const gallery = pgTable('gallery', {
+  id: serial('id').primaryKey(),
+  imageUrl: text('image_url').notNull(),
+  title: text('title'),
+  deskripsi: text('deskripsi'),
+  urutan: integer('urutan').default(0),
+  aktif: integer('aktif').default(1),
+  createdAt: timestamp('created_at', { mode: 'string' }).default(sql`CURRENT_TIMESTAMP`),
+}, (t) => [index('idx_gallery_aktif').on(t.aktif)])

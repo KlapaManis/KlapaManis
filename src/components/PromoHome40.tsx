@@ -22,7 +22,7 @@ function pickDir(setting: string, prev?: Dir): Dir {
   return d
 }
 
-export default function PromoHome40({ banners, galleryTransition='acak', galleryInterval='3000' }: { groups?: any, banners: Banner[], galleryTransition?: string, galleryInterval?: string }){
+export default function PromoHome40({ banners, galleryTransition='acak', galleryInterval='3000', bgColor='#FAF7F2' }: { groups?: any, banners: Banner[], galleryTransition?: string, galleryInterval?: string, bgColor?: string }){
   const router = useRouter()
   const [idx,setIdx]=useState(0)
   const [dir,setDir]=useState<Dir>('left')
@@ -50,10 +50,10 @@ export default function PromoHome40({ banners, galleryTransition='acak', gallery
   }
 
   return (
-    <div className="w-full">
-      {/* Gallery slider - 45% ikut scroll */}
-      <div className="px-3 sm:px-4 pt-3 pb-2">
-        <div className="h-[38dvh] rounded-2xl overflow-hidden bg-stone-100 border border-[#EEE8D8] relative">
+    <div className="flex flex-col h-full w-full overflow-hidden">
+      {/* Gallery slider — flex-1 ambil sisa ruang */}
+      <div className="flex-1 flex flex-col min-h-0 px-3 sm:px-4 pt-3 pb-2">
+        <div className="flex-1 min-h-0 rounded-2xl overflow-hidden bg-stone-100 border border-[#EEE8D8] relative">
           {banners.length>0 ? (
             <div className="w-full h-full relative overflow-hidden" onClick={()=>{
               const b=banners[idx]; setDetail({title: b.title||'Gallery', image: b.imageUrl, desc: null})
@@ -85,9 +85,9 @@ export default function PromoHome40({ banners, galleryTransition='acak', gallery
         </div>
       </div>
 
-      {/* Menu bawah - tidak kepotong */}
-      <div className="bg-[#FAF7F2] flex items-center justify-center px-2 pt-2 pb-4">
-        <CategoryNav active={tab} onSelect={(v)=>{ setTab(v.toLowerCase() as any); router.push(`/home/kategori/${v.toLowerCase()}`) }} />
+      {/* Menu bawah - ikut bg_color setting */}
+      <div className="flex items-center justify-center px-2 pt-2 pb-4" style={{backgroundColor: bgColor}}>
+        <CategoryNav active={tab} onSelect={(v)=>{ setTab(v.toLowerCase() as any); if(v.toLowerCase()==='gallery'){ router.push('/home/gallery') }else{ router.push(`/home/kategori/${v.toLowerCase()}`) } }} bgColor={bgColor} />
       </div>
       <DetailModal data={detail} onClose={()=>setDetail(null)} />
     </div>
