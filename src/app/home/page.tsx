@@ -16,19 +16,21 @@ export default async function PromoPage() {
 
   return (
     <PageTransition>
-    <div className="flex flex-col h-[100svh] w-full overflow-hidden" style={{backgroundColor: bgColor}}>
-      {/* Hero paten - 3D shadow */}
-      <section className="relative h-[42svh] shrink-0 w-full overflow-hidden bg-stone-900 rounded-b-[24px]" style={{boxShadow: '0 12px 32px rgba(0,0,0,0.45), 0 4px 12px rgba(0,0,0,0.3)'}}>
-        {heroImage && <img src={heroImage} alt="Hero" className="absolute inset-0 w-full h-full object-cover" />}
-        {(heroTitle || heroSubtitle) && <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />}
-        <div className="relative z-10 h-full max-w-6xl mx-auto px-4 pb-6 flex flex-col justify-end text-white">
-          {heroTitle && <h1 className="font-serif text-2xl sm:text-4xl font-semibold leading-tight">{heroTitle}</h1>}
-          {heroSubtitle && <p className="text-xs sm:text-sm text-white/80 italic mt-1">{heroSubtitle}</p>}
-        </div>
-      </section>
+    <div className="flex flex-col h-[100svh] w-full overflow-hidden">
+      {/* Rounded background + hero */}
+      <div className="relative h-[48svh] shrink-0 rounded-b-[40px] overflow-hidden" style={{backgroundColor: bgColor, boxShadow: '0 12px 32px rgba(0,0,0,0.45), 0 4px 12px rgba(0,0,0,0.3)'}}>
+        <section className="absolute inset-0 w-full h-full overflow-hidden bg-stone-900">
+          {heroImage && <img src={heroImage} alt="Hero" className="absolute inset-0 w-full h-full object-cover" />}
+          {(heroTitle || heroSubtitle) && <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />}
+          <div className="relative z-10 h-full max-w-6xl mx-auto px-4 pb-6 flex flex-col justify-end text-white">
+            {heroTitle && <h1 className="font-serif text-2xl sm:text-4xl font-semibold leading-tight">{heroTitle}</h1>}
+            {heroSubtitle && <p className="text-xs sm:text-sm text-white/80 italic mt-1">{heroSubtitle}</p>}
+          </div>
+        </section>
+      </div>
 
-      {/* Gallery + Menu paten full */}
-      <div className="flex-1 flex flex-col overflow-hidden min-h-0">
+      {/* Content overlapping the rounded background */}
+      <div className="flex-1 flex flex-col overflow-hidden min-h-0 -mt-4 relative z-10">
         <PromoHome40 banners={banners} galleryTransition={settings['promo_landing.gallery_transition']||'acak'} galleryInterval={settings['promo_landing.gallery_interval']||'3000'} bgColor={bgColor} />
       </div>
     </div>
